@@ -14,10 +14,12 @@ export class UploadsService {
 
   constructor(private config: ConfigService) {
     this.bucket = config.get('MINIO_BUCKET');
+    const port = config.get<number>('MINIO_PORT') ?? 443;
+    const useSSL = config.get('MINIO_USE_SSL') !== 'false';
     this.minio = new Minio.Client({
       endPoint: config.get('MINIO_ENDPOINT'),
-      port: config.get<number>('MINIO_PORT'),
-      useSSL: false,
+      port: Number(port),
+      useSSL,
       accessKey: config.get('MINIO_ACCESS_KEY'),
       secretKey: config.get('MINIO_SECRET_KEY'),
     });
@@ -30,14 +32,9 @@ export class UploadsService {
       if (!exists) {
         await this.minio.makeBucket(this.bucket);
       }
-      // Always apply public-read policy (covers existing buckets too)
-      await this.minio.setBucketPolicy(this.bucket, JSON.stringify({
-        Version: '2012-10-17',
-        Statement: [{ Effect: 'Allow', Principal: { AWS: ['*'] }, Action: ['s3:GetObject'], Resource: [`arn:aws:s3:::${this.bucket}/*`] }],
-      }));
-      this.logger.log(`MinIO bucket "${this.bucket}" ready`);
+      this.logger.log(`R2 bucket "${this.bucket}" ready`);
     } catch (err) {
-      this.logger.warn(`MinIO not reachable at startup — uploads will fail until MinIO is available. Error: ${err.message}`);
+      this.logger.warn(`R2 not reachable at startup — uploads will fail until R2 is configured. Error: ${err.message}`);
     }
   }
 
@@ -45,7 +42,7 @@ export class UploadsService {
     const ext = path.extname(originalName);
     const key = `uploads/${uuidv4()}${ext}`;
     await this.minio.putObject(this.bucket, key, buffer, buffer.length, { 'Content-Type': mimetype });
-    return `${this.config.get('MINIO_PUBLIC_URL')}/${this.bucket}/${key}`;
+    return `${this.config.get('MINIO_PUBLIC_URL')}/${key}`;
   }
 
   async uploadVideoAndTranscode(buffer: Buffer, originalName: string): Promise<{ url: string; key: string; duration: number }> {
@@ -78,7 +75,7 @@ export class UploadsService {
     fs.unlinkSync(inputPath);
     fs.rmSync(outputDir, { recursive: true });
 
-    const url = `${this.config.get('MINIO_PUBLIC_URL')}/${this.bucket}/${key}/index.m3u8`;
+    const url = `${this.config.get('MINIO_PUBLIC_URL')}/${key}/index.m3u8`;
     return { url, key, duration: 0 };
   }
 
