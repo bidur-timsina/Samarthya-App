@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "announcements" ADD COLUMN     "type" TEXT NOT NULL DEFAULT 'INFO';
