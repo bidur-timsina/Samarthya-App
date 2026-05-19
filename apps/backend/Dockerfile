@@ -1,6 +1,6 @@
 FROM node:20-slim
 
-# Install OpenSSL for Prisma + other deps
+# Install OpenSSL for Prisma
 RUN apt-get update -y && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # Install pnpm
@@ -29,13 +29,18 @@ COPY apps/backend/nest-cli.json ./apps/backend/nest-cli.json
 COPY apps/backend/tsconfig.json ./apps/backend/tsconfig.json
 COPY apps/backend/tsconfig.build.json ./apps/backend/tsconfig.build.json
 
-# Build NestJS — output goes to /app/apps/backend/dist/
-RUN pnpm --filter backend build
+# Build NestJS explicitly from backend dir with verbose output
+# cache-bust: v3
+RUN cd /app/apps/backend && \
+    echo "=== tsconfig.build.json ===" && cat tsconfig.build.json && \
+    echo "=== Running nest build ===" && \
+    ./node_modules/.bin/nest build && \
+    echo "=== Build complete, listing dist ===" && \
+    ls -la dist/
 
-# Verify build output exists (fails build if missing)
+# Verify main.js exists
 RUN ls -la /app/apps/backend/dist/main.js
 
 EXPOSE 3000
 
-# Run migrations then start
 CMD ["sh", "-c", "cd /app/apps/backend && npx prisma migrate deploy && node dist/main.js"]
