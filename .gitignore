@@ -11,3 +11,5 @@ coverage/
 .turbo/
 minio/
 *.exe
+apps/mobile/android/
+apps/mobile/ios/
