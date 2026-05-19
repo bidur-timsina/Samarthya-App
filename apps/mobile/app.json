@@ -51,8 +51,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "your-eas-project-id"
+        "projectId": "a19cae41-25f3-4a43-8e6a-82e72cfca6d3"
       }
-    }
+    },
+    "owner": "bidurtimsinas-organization"
   }
 }
