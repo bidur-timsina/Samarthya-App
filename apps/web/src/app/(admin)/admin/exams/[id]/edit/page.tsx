@@ -85,7 +85,7 @@ function parseSheet(file: File): Promise<MCQQuestion[]> {
         }
         const dataRows = rows.slice(headerIdx + 1).filter(r => r.some(c => c !== ''));
         const questions: MCQQuestion[] = dataRows.map(row => ({
-          type: 'MCQ',
+          type: 'MCQ' as const,
           text: String(row[0] ?? '').trim(),
           options: [String(row[1] ?? '').trim(), String(row[2] ?? '').trim(), String(row[3] ?? '').trim(), String(row[4] ?? '').trim()],
           explanation: String(row[5] ?? '').trim(),
