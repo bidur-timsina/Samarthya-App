@@ -20,6 +20,10 @@ COPY apps/web ./apps/web/
 
 WORKDIR /app/apps/web
 
+# Accept NEXT_PUBLIC vars as build args (Next.js bakes them at build time)
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 # Build Next.js
 RUN pnpm run build
 
