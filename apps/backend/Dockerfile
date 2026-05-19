@@ -27,6 +27,7 @@ RUN pnpm --filter backend exec -- npx prisma generate
 COPY apps/backend/src ./apps/backend/src
 COPY apps/backend/nest-cli.json ./apps/backend/nest-cli.json
 COPY apps/backend/tsconfig.json ./apps/backend/tsconfig.json
+COPY apps/backend/tsconfig.build.json ./apps/backend/tsconfig.build.json
 
 # Build NestJS — output goes to /app/apps/backend/dist/
 RUN pnpm --filter backend build
