@@ -20,9 +20,8 @@ COPY apps/web ./apps/web/
 
 WORKDIR /app/apps/web
 
-# Accept NEXT_PUBLIC vars as build args (Next.js bakes them at build time)
-ARG NEXT_PUBLIC_API_URL
-ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+# Bake production API URL into Next.js build
+ENV NEXT_PUBLIC_API_URL=https://samarthyalms.up.railway.app/api/v1
 
 # Build Next.js
 RUN pnpm run build
