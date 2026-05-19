@@ -29,8 +29,8 @@ interface SubjectiveQuestion {
 
 type Question = MCQQuestion | SubjectiveQuestion;
 
-const blankMCQ = (): MCQQuestion => ({ type: 'MCQ', text: '', options: ['', '', '', ''], correctIndex: 0, explanation: '', marks: 1 });
-const blankSubjective = (): SubjectiveQuestion => ({ type: 'SUBJECTIVE', text: '', modelAnswer: '', marks: 5 });
+const blankMCQ = (): MCQQuestion => ({ type: 'MCQ' as const, text: '', options: ['', '', '', ''], correctIndex: 0, explanation: '', marks: 1 });
+const blankSubjective = (): SubjectiveQuestion => ({ type: 'SUBJECTIVE' as const, text: '', modelAnswer: '', marks: 5 });
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -73,7 +73,7 @@ function parseSheet(file: File): Promise<MCQQuestion[]> {
         const dataRows = rows.slice(headerIdx + 1).filter(r => r.some(c => c !== ''));
 
         const questions: MCQQuestion[] = dataRows.map(row => ({
-          type: 'MCQ',
+          type: 'MCQ' as const,
           text: String(row[0] ?? '').trim(),
           options: [
             String(row[1] ?? '').trim(),

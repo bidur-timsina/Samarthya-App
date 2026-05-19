@@ -31,8 +31,8 @@ interface SubjectiveQuestion {
 
 type Question = MCQQuestion | SubjectiveQuestion;
 
-const blankMCQ = (): MCQQuestion => ({ type: 'MCQ', text: '', options: ['', '', '', ''], correctIndex: 0, explanation: '', marks: 1 });
-const blankSubjective = (): SubjectiveQuestion => ({ type: 'SUBJECTIVE', text: '', modelAnswer: '', marks: 5 });
+const blankMCQ = (): MCQQuestion => ({ type: 'MCQ' as const, text: '', options: ['', '', '', ''], correctIndex: 0, explanation: '', marks: 1 });
+const blankSubjective = (): SubjectiveQuestion => ({ type: 'SUBJECTIVE' as const, text: '', modelAnswer: '', marks: 5 });
 
 function detectMode(questions: any[]): ExamMode {
   if (!questions?.length) return 'MCQ';
@@ -41,10 +41,10 @@ function detectMode(questions: any[]): ExamMode {
 
 function fromApi(q: any): Question {
   if (q.questionType === 'SUBJECTIVE') {
-    return { id: q.id, type: 'SUBJECTIVE', text: q.text ?? '', modelAnswer: q.modelAnswer ?? '', marks: q.marks ?? 5 };
+    return { id: q.id, type: 'SUBJECTIVE' as const, text: q.text ?? '', modelAnswer: q.modelAnswer ?? '', marks: q.marks ?? 5 };
   }
   return {
-    id: q.id, type: 'MCQ', text: q.text ?? '',
+    id: q.id, type: 'MCQ' as const, text: q.text ?? '',
     options: Array.isArray(q.options) ? q.options : ['', '', '', ''],
     correctIndex: q.correctAnswer ?? 0,
     explanation: q.explanation ?? '',
