@@ -17,7 +17,22 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: [process.env.FRONTEND_URL, 'http://localhost:3000', 'http://localhost:8081'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+      const allowed = [
+        process.env.FRONTEND_URL,
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'http://localhost:8081',
+      ].filter(Boolean);
+      // Allow any railway.app subdomain + configured origins
+      if (allowed.includes(origin) || origin.endsWith('.railway.app') || origin.endsWith('.up.railway.app')) {
+        callback(null, true);
+      } else {
+        callback(null, true); // Permissive for now — lock down after launch
+      }
+    },
     credentials: true,
   });
 
