@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Query, UseGuards, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -42,4 +43,13 @@ export class UsersController {
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN)
   adminDelete(@Param('id') id: string) { return this.users.adminDelete(id); }
+
+  @Post('bulk-import')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 5 * 1024 * 1024 } }))
+  bulkImport(@UploadedFile() file: Express.Multer.File) {
+    if (!file) throw new BadRequestException('No file uploaded');
+    return this.users.bulkImport(file.buffer, file.originalname);
+  }
 }

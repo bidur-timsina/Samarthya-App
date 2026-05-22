@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import * as XLSX from 'xlsx';
 
 @Injectable()
 export class UsersService {
@@ -79,5 +80,55 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) throw new NotFoundException();
     return this.prisma.user.delete({ where: { id } });
+  }
+
+  async bulkImport(buffer: Buffer, filename: string) {
+    // Parse CSV or XLSX
+    const isCSV = filename.toLowerCase().endsWith('.csv');
+    const workbook = XLSX.read(buffer, { type: 'buffer', raw: isCSV });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+
+    const results = { created: 0, skipped: 0, errors: [] as { row: number; email: string; reason: string }[] };
+
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      // Normalize column names (case-insensitive, handle spaces)
+      const name  = (row['Full Name'] ?? row['Name'] ?? row['name'] ?? '').toString().trim();
+      const email = (row['Email'] ?? row['email'] ?? '').toString().trim().toLowerCase();
+      const phone = (row['Phone'] ?? row['phone'] ?? '').toString().trim() || undefined;
+      const pwd   = (row['Password'] ?? row['password'] ?? '').toString().trim() || 'Student@123';
+
+      if (!name || !email) {
+        results.errors.push({ row: i + 2, email: email || '(empty)', reason: 'Missing name or email' });
+        continue;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        results.errors.push({ row: i + 2, email, reason: 'Invalid email format' });
+        continue;
+      }
+
+      try {
+        const existing = await this.prisma.user.findUnique({ where: { email } });
+        if (existing) {
+          results.skipped++;
+          results.errors.push({ row: i + 2, email, reason: 'Email already registered (skipped)' });
+          continue;
+        }
+        const hashed = await bcrypt.hash(pwd, 12);
+        await this.prisma.user.create({
+          data: { name, email, phone, password: hashed, role: 'STUDENT', isVerified: true },
+        });
+        results.created++;
+      } catch (e: any) {
+        results.errors.push({ row: i + 2, email, reason: e?.message ?? 'Unknown error' });
+      }
+    }
+
+    return {
+      message: `Import complete: ${results.created} created, ${results.skipped} skipped`,
+      ...results,
+      total: rows.length,
+    };
   }
 }
