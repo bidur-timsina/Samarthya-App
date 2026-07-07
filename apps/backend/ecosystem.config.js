@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'samarthya-api',
+      name: 'shubhayatra-api',
       script: 'dist/main.js',
       instances: 'max',          // use all CPU cores
       exec_mode: 'cluster',

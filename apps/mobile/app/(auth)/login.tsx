@@ -40,7 +40,7 @@ export default function LoginScreen() {
       {/* Header */}
       <View style={styles.header}>
         <Image source={require('@/assets/logo.png')} style={styles.logo} resizeMode="contain" />
-        <Text style={styles.title}>Samarthya Institute</Text>
+        <Text style={styles.title}>Shubha Yatra Academy</Text>
         <Text style={styles.subtitle}>Sign in to continue learning</Text>
       </View>
 

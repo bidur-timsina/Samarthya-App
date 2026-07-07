@@ -46,7 +46,7 @@ export default function RegisterScreen() {
         <View style={styles.header}>
           <Image source={require('@/assets/logo.png')} style={styles.logo} resizeMode="contain" />
           <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Join Samarthya Institute today</Text>
+          <Text style={styles.subtitle}>Join Shubha Yatra Academy today</Text>
         </View>
 
         {/* Form */}

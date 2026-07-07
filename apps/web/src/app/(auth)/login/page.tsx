@@ -48,8 +48,8 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Image src="/logo.png" alt="Samarthya Institute" width={80} height={80} className="object-contain mx-auto mb-2" />
-          <h1 className="text-2xl font-bold text-white">Samarthya Institute</h1>
+          <Image src="/logo.png" alt="Shubha Yatra Academy" width={80} height={80} className="object-contain mx-auto mb-2" />
+          <h1 className="text-2xl font-bold text-white">Shubha Yatra Academy</h1>
           <p className="text-dark-muted text-sm mt-1">Sign in to your account</p>
         </div>
 

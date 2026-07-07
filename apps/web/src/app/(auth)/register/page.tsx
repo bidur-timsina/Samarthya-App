@@ -47,9 +47,9 @@ export default function RegisterPage() {
 
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <Image src="/logo.png" alt="Samarthya Institute" width={80} height={80} className="object-contain mx-auto mb-2" />
+          <Image src="/logo.png" alt="Shubha Yatra Academy" width={80} height={80} className="object-contain mx-auto mb-2" />
           <h1 className="text-2xl font-bold text-white">Create Account</h1>
-          <p className="text-dark-muted text-sm mt-1">Join Samarthya Institute</p>
+          <p className="text-dark-muted text-sm mt-1">Join Shubha Yatra Academy</p>
         </div>
 
         <div className="card p-6 space-y-4">

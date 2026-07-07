@@ -60,7 +60,7 @@ export const useAuthStore = create<AuthStore>()(
       },
     }),
     {
-      name: 'samarthya-auth',
+      name: 'shubhayatra-auth',
       partialize: (s) => ({ user: s.user, isAuthenticated: s.isAuthenticated }),
     },
   ),

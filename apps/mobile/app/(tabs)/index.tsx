@@ -106,7 +106,7 @@ export default function HomeScreen() {
       <View style={styles.header}>
         <View style={styles.logoRow}>
           <Image source={require('@/assets/logo.png')} style={styles.logo} resizeMode="contain" />
-          <Text style={styles.appName}>Samarthya Institute</Text>
+          <Text style={styles.appName}>Shubha Yatra Academy</Text>
         </View>
         <TouchableOpacity onPress={() => router.push('/(tabs)/profile')} style={styles.avatar}>
           <Text style={styles.avatarText}>{user?.name?.[0]?.toUpperCase()}</Text>

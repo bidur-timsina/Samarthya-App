@@ -108,7 +108,7 @@ export default function AdminSettingsPage() {
           <h2 className="font-semibold text-gray-900 dark:text-white">Platform Info</h2>
         </div>
         {[
-          { label: 'Institute Name', value: 'Samarthya Institute' },
+          { label: 'Academy Name', value: 'Shubha Yatra Academy' },
           { label: 'Platform Version', value: '1.0.0' },
           { label: 'API Base', value: 'http://localhost:4000/api/v1' },
           { label: 'Environment', value: 'Development' },

@@ -52,7 +52,7 @@ export default function AdminAnalyticsPage() {
     <div className="space-y-6 max-w-7xl mx-auto">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Analytics</h1>
-        <p className="text-dark-muted text-sm">Performance overview for Samarthya Institute</p>
+        <p className="text-dark-muted text-sm">Performance overview for Shubha Yatra Academy</p>
       </div>
 
       {/* KPI tiles */}

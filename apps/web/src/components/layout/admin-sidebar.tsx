@@ -30,7 +30,7 @@ export function AdminSidebar() {
       <div className="p-4 border-b border-gray-200 dark:border-dark-border flex items-center gap-3">
         <Image src="/logo.png" alt="SYA Logo" width={36} height={36} className="object-contain flex-shrink-0" />
         <div>
-          <p className="text-sm font-bold text-gray-900 dark:text-white leading-none">Samarthya</p>
+          <p className="text-sm font-bold text-gray-900 dark:text-white leading-none">Shubha Yatra</p>
           <p className="text-[10px] text-dark-muted uppercase tracking-wider">{user?.role === 'TEACHER' ? 'Teacher Panel' : 'Admin Panel'}</p>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client';
 import { useAuthStore } from '@/store/auth.store';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
@@ -12,6 +12,10 @@ import { format } from 'date-fns';
 export default function ProfilePage() {
   const { user, logout, setUser } = useAuthStore();
   const { theme, setTheme } = useTheme();
+  // next-themes only knows the theme on the client; gate on mount to avoid a hydration mismatch
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const dark = mounted && theme === 'dark';
   const qc = useQueryClient();
 
   const [editing, setEditing] = useState(false);
@@ -94,18 +98,18 @@ export default function ProfilePage() {
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-dark-bg flex items-center justify-center">
-              {theme === 'dark' ? <Moon className="w-4.5 h-4.5 text-brand-400" /> : <Sun className="w-4.5 h-4.5 text-amber-400" />}
+              {dark ? <Moon className="w-4.5 h-4.5 text-brand-400" /> : <Sun className="w-4.5 h-4.5 text-amber-400" />}
             </div>
             <div>
               <p className="text-sm font-medium text-gray-900 dark:text-white">Appearance</p>
-              <p className="text-xs text-dark-muted capitalize">{theme} mode</p>
+              <p className="text-xs text-dark-muted capitalize">{mounted ? theme : 'light'} mode</p>
             </div>
           </div>
           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className={cn('w-12 h-6 rounded-full transition-all relative flex-shrink-0', theme === 'dark' ? 'bg-brand-900' : 'bg-gray-200')}
+            onClick={() => setTheme(dark ? 'light' : 'dark')}
+            className={cn('w-12 h-6 rounded-full transition-all relative flex-shrink-0', dark ? 'bg-brand-900' : 'bg-gray-200')}
           >
-            <span className={cn('absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all', theme === 'dark' ? 'translate-x-6' : 'translate-x-0.5')} />
+            <span className={cn('absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all', dark ? 'translate-x-6' : 'translate-x-0.5')} />
           </button>
         </div>
 

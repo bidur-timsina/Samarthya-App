@@ -37,8 +37,8 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Samarthya LMS API')
-    .setDescription('Learning Management System for Samarthya Institute')
+    .setTitle('Shubha Yatra Academy LMS API')
+    .setDescription('Learning Management System for Shubha Yatra Academy')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
@@ -48,7 +48,7 @@ async function bootstrap() {
 
   const port = process.env.PORT ?? 4000;
   await app.listen(port);
-  console.log(`Samarthya LMS API running on http://localhost:${port}/api/v1`);
+  console.log(`Shubha Yatra Academy LMS API running on http://localhost:${port}/api/v1`);
   console.log(`Swagger docs: http://localhost:${port}/api/docs`);
 }
 

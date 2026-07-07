@@ -34,7 +34,7 @@ export default function AdminDashboardPage() {
     <div className="space-y-6 max-w-7xl mx-auto">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-        <p className="text-dark-muted text-sm">Samarthya Institute Overview</p>
+        <p className="text-dark-muted text-sm">Shubha Yatra Academy Overview</p>
       </div>
 
       {/* Stats */}

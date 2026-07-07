@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: samarthya_postgres
+    container_name: shubhayatra_postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: samarthya
@@ -19,7 +19,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: samarthya_redis
+    container_name: shubhayatra_redis
     restart: unless-stopped
     ports:
       - '6379:6379'
@@ -34,7 +34,7 @@ services:
 
   minio:
     image: minio/minio:latest
-    container_name: samarthya_minio
+    container_name: shubhayatra_minio
     restart: unless-stopped
     environment:
       MINIO_ROOT_USER: samarthya

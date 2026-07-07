@@ -7,21 +7,21 @@ async function main() {
   const hash = (p: string) => bcrypt.hash(p, 12);
 
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@samarthya.edu.np' },
+    where: { email: 'admin@shubhayatra.edu.np' },
     update: {},
-    create: { name: 'Admin', email: 'admin@samarthya.edu.np', password: await hash('Admin@123'), role: 'ADMIN', isVerified: true },
+    create: { name: 'Admin', email: 'admin@shubhayatra.edu.np', password: await hash('Admin@123'), role: 'ADMIN', isVerified: true },
   });
 
   const teacher = await prisma.user.upsert({
-    where: { email: 'teacher@samarthya.edu.np' },
+    where: { email: 'teacher@shubhayatra.edu.np' },
     update: {},
-    create: { name: 'Teacher', email: 'teacher@samarthya.edu.np', password: await hash('Teacher@123'), role: 'TEACHER', isVerified: true },
+    create: { name: 'Teacher', email: 'teacher@shubhayatra.edu.np', password: await hash('Teacher@123'), role: 'TEACHER', isVerified: true },
   });
 
   const student = await prisma.user.upsert({
-    where: { email: 'student@samarthya.edu.np' },
+    where: { email: 'student@shubhayatra.edu.np' },
     update: {},
-    create: { name: 'Student', email: 'student@samarthya.edu.np', password: await hash('Student@123'), role: 'STUDENT', isVerified: true, xp: { create: {} } },
+    create: { name: 'Student', email: 'student@shubhayatra.edu.np', password: await hash('Student@123'), role: 'STUDENT', isVerified: true, xp: { create: {} } },
   });
 
   const categories = ['Loksewa', 'Engineering', 'Health', 'Banking', 'Teaching', 'IT'];
@@ -87,9 +87,9 @@ async function main() {
   });
 
   console.log('✅ Seed complete');
-  console.log('Admin:   admin@samarthya.edu.np / Admin@123');
-  console.log('Teacher: teacher@samarthya.edu.np / Teacher@123');
-  console.log('Student: student@samarthya.edu.np / Student@123');
+  console.log('Admin:   admin@shubhayatra.edu.np / Admin@123');
+  console.log('Teacher: teacher@shubhayatra.edu.np / Teacher@123');
+  console.log('Student: student@shubhayatra.edu.np / Student@123');
 }
 
 main().catch(console.error).finally(() => prisma.$disconnect());

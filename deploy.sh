@@ -1,11 +1,11 @@
 #!/bin/bash
-# ── Samarthya Institute — VPS Deploy Script ───────────────────────────────────
+# ── Shubha Yatra Academy — VPS Deploy Script ───────────────────────────────────
 # Run on your server: bash deploy.sh
 
 set -e
-echo "🚀 Deploying Samarthya Institute API..."
+echo "🚀 Deploying Shubha Yatra Academy API..."
 
-cd /var/www/samarthya/backend
+cd /var/www/shubhayatra/backend
 
 # Pull latest code
 git pull origin main

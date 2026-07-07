@@ -27,7 +27,7 @@ function BulkImportModal({ onClose }: { onClose: () => void }) {
     ws['!cols'] = [{ wch: 22 }, { wch: 28 }, { wch: 16 }, { wch: 16 }];
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Students');
-    XLSX.writeFile(wb, 'samarthya-students-template.xlsx');
+    XLSX.writeFile(wb, 'shubha-yatra-students-template.xlsx');
   };
 
   const parseFile = useCallback((f: File) => {

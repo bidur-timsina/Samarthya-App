@@ -4,7 +4,7 @@ import { Providers } from '@/components/providers';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: { default: 'Samarthya Institute', template: '%s | Samarthya Institute' },
+  title: { default: 'Shubha Yatra Academy', template: '%s | Shubha Yatra Academy' },
   description: 'Nepal\'s premier learning platform for competitive exam preparation',
   icons: {
     icon: [

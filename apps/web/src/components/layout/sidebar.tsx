@@ -39,8 +39,8 @@ export function Sidebar() {
         <Image src="/logo.png" alt="SYA Logo" width={36} height={36} className="object-contain flex-shrink-0" />
         {!collapsed && (
           <div>
-            <p className="text-sm font-bold text-gray-900 dark:text-white leading-none">Samarthya</p>
-            <p className="text-[10px] text-dark-muted uppercase tracking-wider">Institute</p>
+            <p className="text-sm font-bold text-gray-900 dark:text-white leading-none">Shubha Yatra</p>
+            <p className="text-[10px] text-dark-muted uppercase tracking-wider">Academy</p>
           </div>
         )}
       </div>
